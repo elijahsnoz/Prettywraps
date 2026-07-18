@@ -37,6 +37,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* `overflow-x: hidden` on body alone does NOT clip — with html left visible
+     the value propagates to the viewport and body itself computes to visible,
+     letting the decorative glows widen the document and drag the fixed header
+     off-screen with them. Clipping at the root is what actually holds. */
+  overflow-x: clip;
 }
 
 body {
@@ -45,7 +50,21 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  /* Stops the whole page rubber-banding when a customer scrolls the chat. */
+  overscroll-behavior-y: none;
+  /* Respect the notch / home indicator on modern phones. */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
+
+/* Grey flash on tap looks broken on a premium brand. */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS zooms the page in whenever a focused field renders under 16px, which
+   makes the chat feel broken. The fields themselves use `text-base sm:text-sm`
+   so they're 16px on phones and can tighten up on larger screens. */
 
 /* Respect users who prefer less motion. */
 @media (prefers-reduced-motion: reduce) {
@@ -79,14 +98,27 @@ body {
 
 /* Frosted card surface used across the site. */
 @utility surface {
+  /* Slightly more opaque on phones, because backdrop-filter is switched off
+     there — the card still needs to separate from the background. */
   background: linear-gradient(
     160deg,
-    rgb(255 255 255 / 0.07),
-    rgb(255 255 255 / 0.02)
+    rgb(255 255 255 / 0.09),
+    rgb(255 255 255 / 0.035)
   );
   border: 1px solid rgb(255 255 255 / 0.09);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+
+  /* There are a lot of these on the page and backdrop-filter forces the
+     browser to re-sample everything behind each one. Worth it on desktop,
+     too costly on a mid-range Android. */
+  @media (min-width: 768px) {
+    background: linear-gradient(
+      160deg,
+      rgb(255 255 255 / 0.07),
+      rgb(255 255 255 / 0.02)
+    );
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
 }
 
 @utility surface-hover {
@@ -102,13 +134,25 @@ body {
   }
 }
 
-/* Ambient glow blobs behind sections. */
+/* Ambient glow blobs behind sections.
+   A 120px blur is one of the most expensive things you can ask a GPU to do.
+   Most of our visitors are on mid-range Android phones, so on small screens we
+   swap the blur for a radial gradient that looks near-identical and costs
+   almost nothing. */
 @utility glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(120px);
   pointer-events: none;
   z-index: 0;
+  /* Blur cost scales with radius, so phones get a much cheaper one. It still
+     reads as a soft glow at this size, just for a fraction of the GPU work. */
+  filter: blur(44px);
+  opacity: 0.5;
+
+  @media (min-width: 768px) {
+    filter: blur(120px);
+    opacity: 1;
+  }
 }
 
 /* Slow drifting shimmer on the hero. */
@@ -140,6 +184,50 @@ body {
 @utility animate-shimmer {
   background-size: 200% auto;
   animation: shimmer 6s linear infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance animations, done in CSS rather than JavaScript.
+
+   These used to be framer-motion, which meant every headline shipped as
+   `opacity: 0` and only became visible once the JS bundle had downloaded,
+   parsed, and hydrated. On a slow mobile connection that's several seconds of
+   blank screen, and if the JS fails the page never appears at all.
+
+   In CSS the content is visible by default and the animation is pure
+   enhancement — nothing is ever hidden waiting on JavaScript.
+   --------------------------------------------------------------------------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hero entrance — time-based, runs on load. */
+.rise {
+  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll-linked reveal. Visible by default; the scroll animation only attaches
+   where the browser supports it, so unsupported browsers simply see content. */
+.reveal {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+  }
 }
 
 /* Typing dots in the concierge. */

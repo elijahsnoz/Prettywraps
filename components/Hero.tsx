@@ -1,11 +1,14 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { brand, whatsappLink } from "@/lib/brand";
-import { WhatsAppIcon } from "./QuoteCard";
+import { WhatsAppIcon } from "./icons";
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
+/**
+ * A server component — no JavaScript involved.
+ *
+ * The entrance animation is pure CSS, so the headline paints with the very
+ * first HTML response instead of waiting on a bundle. On the mobile networks
+ * most of our customers are on, that's the difference between an instant page
+ * and several seconds of empty purple.
+ */
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-32 pb-20 sm:pt-40 sm:pb-28">
@@ -21,21 +24,14 @@ export function Hero() {
       />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease }}
-          className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-gold-400/25 bg-gold-400/[0.07] px-4 py-1.5 text-[11px] uppercase tracking-[0.22em] text-gold-300"
-        >
+        <p className="rise mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-gold-400/25 bg-gold-400/[0.07] px-4 py-1.5 text-[11px] uppercase tracking-[0.22em] text-gold-300">
           <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
           Surprise concierge · Nigeria
-        </motion.p>
+        </p>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.08, ease }}
-          className="font-display text-[2.6rem] leading-[1.05] tracking-tight text-cream sm:text-6xl md:text-7xl"
+        <h1
+          className="rise font-display text-[2.6rem] leading-[1.05] tracking-tight text-cream sm:text-6xl md:text-7xl"
+          style={{ animationDelay: "0.08s" }}
         >
           Don&apos;t just say
           <br />
@@ -44,24 +40,20 @@ export function Hero() {
           <span className="text-gilded animate-shimmer">
             Create unforgettable memories.
           </span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.24, ease }}
-          className="mx-auto mt-7 max-w-xl text-[15px] leading-relaxed text-cream/60 sm:text-base"
+        <p
+          className="rise mx-auto mt-7 max-w-xl text-[15px] leading-relaxed text-cream/60 sm:text-base"
+          style={{ animationDelay: "0.24s" }}
         >
           Room takeovers, balloon installations, flowers, cakes and gifts —
           designed around the person you love. Tell our AI concierge what
           you&apos;re imagining and get a real quote in under three minutes.
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.36, ease }}
-          className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        <div
+          className="rise mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          style={{ animationDelay: "0.36s" }}
         >
           <a
             href="#concierge"
@@ -80,20 +72,18 @@ export function Hero() {
             <WhatsAppIcon className="h-4 w-4" />
             Chat on WhatsApp
           </a>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.55 }}
-          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11px] uppercase tracking-[0.18em] text-cream/35"
+        <div
+          className="rise mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[11px] uppercase tracking-[0.18em] text-cream/35"
+          style={{ animationDelay: "0.5s" }}
         >
           <span>Lagos · Abuja · Port Harcourt</span>
           <span className="hidden h-3 w-px bg-cream/15 sm:block" />
           <span>Same-day setups available</span>
           <span className="hidden h-3 w-px bg-cream/15 sm:block" />
           <span>Founded by {brand.founder}</span>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

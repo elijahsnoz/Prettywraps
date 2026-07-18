@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { brand, whatsappLink } from "@/lib/brand";
-import { WhatsAppIcon } from "./QuoteCard";
+import { WhatsAppIcon } from "./icons";
+import { LogoLockup } from "./Logo";
 
 const LINKS = [
   { href: "#concierge", label: "Concierge" },
@@ -30,14 +31,9 @@ export function Header() {
           : "border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <a href="#top" className="group flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-violet-700 text-sm shadow-lg shadow-violet-600/30">
-            💜
-          </span>
-          <span className="font-display text-xl leading-none text-cream">
-            Prettywraps <span className="text-gold-400">NG</span>
-          </span>
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-5">
+        <a href="#top" aria-label={`${brand.name} — home`} className="min-w-0">
+          <LogoLockup size={36} priority />
         </a>
 
         <nav className="hidden items-center gap-7 md:flex">
@@ -69,9 +65,10 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-cream md:hidden"
+            // h-11/w-11 is 44px — the minimum comfortable tap target on a phone.
+            className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-cream md:hidden"
           >
-            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
+            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
               <path
                 d={open ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16"}
                 stroke="currentColor"
@@ -90,7 +87,7 @@ export function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="block py-2.5 text-sm text-cream/75 transition hover:text-gold-300"
+              className="block py-3.5 text-base text-cream/75 transition hover:text-gold-300"
             >
               {link.label}
             </a>

@@ -192,7 +192,9 @@ export function Concierge({ seedMessage }: { seedMessage?: string }) {
   const showOpeners = messages.length === 1 && !streaming;
 
   return (
-    <div className="surface rounded-4xl overflow-hidden flex flex-col h-[min(680px,80vh)]">
+    // dvh, not vh: on mobile browsers vh ignores the collapsing address bar,
+    // which pushes the composer off-screen exactly when someone starts typing.
+    <div className="surface flex h-[min(680px,72dvh)] flex-col overflow-hidden rounded-4xl">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-gradient-to-r from-violet-600/20 to-transparent">
         <div className="relative">
@@ -286,7 +288,7 @@ export function Concierge({ seedMessage }: { seedMessage?: string }) {
             rows={1}
             placeholder="Tell me what you're planning…"
             aria-label="Message the concierge"
-            className="pretty-scroll max-h-32 flex-1 resize-none rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-cream placeholder:text-cream/35 outline-none transition focus:border-violet-400/50 focus:bg-white/[0.07]"
+            className="pretty-scroll max-h-32 flex-1 resize-none rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-base text-cream outline-none transition placeholder:text-cream/35 focus:border-violet-400/50 focus:bg-white/[0.07] sm:text-sm"
           />
           <button
             type="submit"

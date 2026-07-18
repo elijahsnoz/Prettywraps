@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { BookingCalendar } from "./BookingCalendar";
 import { brand, whatsappLink } from "@/lib/brand";
-import { WhatsAppIcon } from "./QuoteCard";
+import { WhatsAppIcon } from "./icons";
 
 export function Availability() {
   const [date, setDate] = useState<string | null>(null);

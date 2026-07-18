@@ -57,6 +57,41 @@ WhatsApp number, Instagram handle, service areas, and lead time all live here.
 
 ---
 
+## Before you go live: set your domain
+
+Set `NEXT_PUBLIC_SITE_URL` in `.env.local` to your real domain. It drives the
+canonical tag, `sitemap.xml`, `robots.txt`, and the WhatsApp/social share image.
+Until it's set, all of those point at a placeholder domain.
+
+---
+
+## Mobile and SEO
+
+The site is built mobile-first, on the assumption that almost every visitor
+arrives on a phone.
+
+- **Content renders without JavaScript.** Headlines and copy are plain HTML with
+  CSS animations, so the page is readable the moment it arrives rather than
+  after a bundle downloads. Only the chat, calendar, and tracking need JS.
+- **No horizontal scroll** at 320 / 360 / 390 / 430px — verified, not assumed.
+- **Cheaper effects on phones.** The blurred glows and frosted-glass panels are
+  scaled back below 768px, where they'd otherwise cost real frames on a
+  mid-range Android.
+- **Tap targets** are 40px+, inputs are 16px so iOS doesn't zoom on focus, and
+  the layout respects notch/home-indicator safe areas.
+- **Floating WhatsApp button** on phones, which hides itself while the concierge
+  chat is on screen.
+- **SEO:** per-page metadata, canonical URL, `robots.txt`, `sitemap.xml`,
+  Open Graph + Twitter cards, and `LocalBusiness` structured data generated from
+  the real package catalogue.
+- **Installable:** a web manifest lets customers add it to their home screen.
+
+One deliberate omission: the structured data declares **no ratings or review
+counts**. Those have to reflect genuine reviews — inventing them violates
+Google's guidelines and can get the site penalised. Add them once they're real.
+
+---
+
 ## 📷 About the Instagram feed — please read
 
 **Instagram does not let a website pull your profile feed automatically.** That

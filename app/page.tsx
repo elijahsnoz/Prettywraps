@@ -6,6 +6,7 @@ import { OrderTracking } from "@/components/OrderTracking";
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { MobileCTA } from "@/components/MobileCTA";
 
 const CHANNELS = [
   {
@@ -67,7 +68,7 @@ export default function Home() {
         <Planner />
 
         {/* Availability */}
-        <section id="calendar" className="relative px-5 py-20 sm:py-24">
+        <section id="calendar" className="relative overflow-hidden px-4 py-20 sm:px-5 sm:py-24">
           <div className="glow left-[-6%] top-[15%] h-[22rem] w-[22rem] bg-violet-600/20" />
 
           <div className="relative z-10 mx-auto max-w-5xl">
@@ -115,7 +116,7 @@ export default function Home() {
         </section>
 
         {/* Instagram */}
-        <section id="work" className="relative px-5 py-20 sm:py-24">
+        <section id="work" className="relative overflow-hidden px-5 py-20 sm:py-24">
           <div className="glow right-[-8%] top-[10%] h-[24rem] w-[24rem] bg-blush-400/15" />
 
           <div className="relative z-10 mx-auto max-w-6xl">
@@ -137,6 +138,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <MobileCTA />
     </>
   );
 }

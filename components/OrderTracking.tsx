@@ -58,7 +58,7 @@ export function OrderTracking() {
           onChange={(e) => setRef(e.target.value.toUpperCase())}
           placeholder="PW-AB1234"
           aria-label="Booking reference"
-          className="flex-1 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-center text-sm tracking-[0.15em] text-cream placeholder:tracking-normal placeholder:text-cream/30 outline-none transition focus:border-violet-400/50 sm:text-left"
+          className="flex-1 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-center text-base tracking-[0.15em] text-cream outline-none transition placeholder:tracking-normal placeholder:text-cream/30 focus:border-violet-400/50 sm:text-left sm:text-sm"
         />
         <button
           type="submit"

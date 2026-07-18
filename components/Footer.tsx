@@ -1,9 +1,11 @@
 import { brand, instagramDmLink, whatsappLink } from "@/lib/brand";
-import { WhatsAppIcon } from "./QuoteCard";
+import { WhatsAppIcon } from "./icons";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 px-5 pt-20 pb-10">
+    // Extra bottom padding on phones so the floating WhatsApp button never
+    // covers the contact details.
+    <footer className="relative overflow-hidden border-t border-white/10 px-5 pt-20 pb-28 md:pb-10">
       <div className="glow left-1/2 top-0 h-[20rem] w-[30rem] -translate-x-1/2 bg-violet-600/20" />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">

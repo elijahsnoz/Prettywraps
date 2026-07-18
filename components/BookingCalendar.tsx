@@ -57,13 +57,15 @@ export function BookingCalendar({ onPick }: { onPick: (date: string) => void }) 
     year === today.getFullYear() && month === today.getMonth() + 1;
 
   return (
-    <div className="surface rounded-4xl p-5 sm:p-7">
+    // Tight padding on phones buys back horizontal room for the day cells —
+    // a 7-column grid at 360px has very little to spare.
+    <div className="surface rounded-4xl p-3 sm:p-7">
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={() => shift(-1)}
           disabled={isCurrentMonth}
           aria-label="Previous month"
-          className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-cream/70 transition enabled:hover:border-gold-400/40 enabled:hover:text-gold-300 disabled:opacity-25"
+          className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-lg text-cream/70 transition enabled:hover:border-gold-400/40 enabled:hover:text-gold-300 disabled:opacity-25"
         >
           ‹
         </button>
@@ -73,13 +75,13 @@ export function BookingCalendar({ onPick }: { onPick: (date: string) => void }) 
         <button
           onClick={() => shift(1)}
           aria-label="Next month"
-          className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-cream/70 transition hover:border-gold-400/40 hover:text-gold-300"
+          className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-lg text-cream/70 transition hover:border-gold-400/40 hover:text-gold-300"
         >
           ›
         </button>
       </div>
 
-      <div className="mb-2 grid grid-cols-7 gap-1.5">
+      <div className="mb-2 grid grid-cols-7 gap-1 sm:gap-1.5">
         {WEEKDAYS.map((d, i) => (
           <div
             key={i}
@@ -90,7 +92,7 @@ export function BookingCalendar({ onPick }: { onPick: (date: string) => void }) 
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1.5">
+      <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
         {Array.from({ length: leadingBlanks }, (_, i) => (
           <div key={`blank-${i}`} />
         ))}

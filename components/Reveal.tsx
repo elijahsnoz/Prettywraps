@@ -1,27 +1,29 @@
-"use client";
+import type { CSSProperties, ReactNode } from "react";
 
-import { motion } from "framer-motion";
-import type { ReactNode } from "react";
-
-/** Soft fade-and-rise as sections scroll into view. */
+/**
+ * Soft fade-and-rise as sections scroll into view.
+ *
+ * Deliberately a server component with no JavaScript: the animation is a
+ * scroll-linked CSS animation, and the content is visible by default. Browsers
+ * without `animation-timeline` support just show it immediately, and nothing
+ * ever depends on a bundle downloading first — which matters when nearly all
+ * our visitors are on mobile networks.
+ */
 export function Reveal({
   children,
   delay = 0,
-  className,
+  className = "",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
 }) {
+  const style: CSSProperties | undefined =
+    delay > 0 ? { animationDelay: `${delay}s` } : undefined;
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div className={`reveal ${className}`} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

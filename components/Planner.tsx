@@ -19,7 +19,7 @@ export function Planner() {
 
   return (
     <>
-      <section id="concierge" className="relative px-5 py-20 sm:py-24">
+      <section id="concierge" className="relative overflow-hidden px-5 py-20 sm:py-24">
         <div className="glow left-[-8%] top-[10%] h-[24rem] w-[24rem] bg-violet-600/25" />
 
         <div className="relative z-10 mx-auto max-w-3xl">
@@ -43,7 +43,7 @@ export function Planner() {
         </div>
       </section>
 
-      <section id="packages" className="relative px-5 py-20 sm:py-24">
+      <section id="packages" className="relative overflow-hidden px-5 py-20 sm:py-24">
         <div className="glow right-[-10%] top-[20%] h-[24rem] w-[24rem] bg-blush-400/15" />
 
         <div className="relative z-10 mx-auto max-w-6xl">
