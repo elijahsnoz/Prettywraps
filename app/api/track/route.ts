@@ -1,0 +1,53 @@
+import { NextRequest } from "next/server";
+import { getBooking, statusLabel, type BookingStatus } from "@/lib/store";
+import { formatNaira } from "@/lib/catalog";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+/** The customer-facing journey, in order. Drives the progress bar. */
+const JOURNEY: BookingStatus[] = [
+  "enquiry",
+  "deposit-pending",
+  "confirmed",
+  "in-preparation",
+  "delivered",
+];
+
+export async function GET(req: NextRequest) {
+  const ref = req.nextUrl.searchParams.get("ref");
+  if (!ref) {
+    return Response.json({ error: "Add a booking reference." }, { status: 400 });
+  }
+
+  const booking = await getBooking(ref);
+  if (!booking) {
+    return Response.json(
+      { found: false, error: `We couldn't find a booking with reference ${ref.toUpperCase()}.` },
+      { status: 404 },
+    );
+  }
+
+  const stepIndex = JOURNEY.indexOf(booking.status);
+
+  return Response.json({
+    found: true,
+    ref: booking.ref,
+    status: booking.status,
+    statusLabel: statusLabel(booking.status),
+    cancelled: booking.status === "cancelled",
+    // -1 when cancelled, which the UI renders as a stopped journey.
+    stepIndex,
+    totalSteps: JOURNEY.length,
+    journey: JOURNEY.map((s) => statusLabel(s)),
+    customerName: booking.customerName,
+    recipientName: booking.recipientName,
+    occasion: booking.occasion,
+    date: booking.date,
+    location: booking.location,
+    packageName: booking.quote?.packageName ?? null,
+    total: booking.quote ? formatNaira(booking.quote.total) : null,
+    deposit: booking.quote ? formatNaira(booking.quote.deposit) : null,
+    events: booking.events,
+  });
+}

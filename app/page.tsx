@@ -1,65 +1,142 @@
-import Image from "next/image";
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { Planner } from "@/components/Planner";
+import { Availability } from "@/components/Availability";
+import { OrderTracking } from "@/components/OrderTracking";
+import { InstagramFeed } from "@/components/InstagramFeed";
+import { Footer } from "@/components/Footer";
+import { Reveal } from "@/components/Reveal";
+
+const CHANNELS = [
+  {
+    emoji: "💬",
+    title: "Website concierge",
+    body: "Right here. Chat, get recommendations, and walk away with a quote and a booking reference.",
+  },
+  {
+    emoji: "📱",
+    title: "WhatsApp AI",
+    body: "Prefer WhatsApp? Message us and we'll pick up exactly where your planning left off.",
+  },
+  {
+    emoji: "📷",
+    title: "Instagram DM",
+    body: "Saw something on our feed? Slide into the DMs and we'll recreate it for your person.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <Header />
+
+      <main>
+        <Hero />
+
+        {/* Channels */}
+        <section className="relative px-5 py-16">
+          <div className="mx-auto max-w-5xl">
+            <Reveal className="mb-10 text-center">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.22em] text-gold-400/70">
+                Three ways to reach us
+              </p>
+              <h2 className="font-display text-3xl leading-tight text-cream sm:text-4xl">
+                Wherever you are, we&apos;re already there
+              </h2>
+            </Reveal>
+
+            <div className="grid gap-5 sm:grid-cols-3">
+              {CHANNELS.map((channel, i) => (
+                <Reveal key={channel.title} delay={i * 0.08}>
+                  <div className="surface surface-hover h-full rounded-3xl p-6">
+                    <span className="text-2xl">{channel.emoji}</span>
+                    <h3 className="mt-3 font-display text-xl text-cream">
+                      {channel.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-cream/55">
+                      {channel.body}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Concierge + packages */}
+        <Planner />
+
+        {/* Availability */}
+        <section id="calendar" className="relative px-5 py-20 sm:py-24">
+          <div className="glow left-[-6%] top-[15%] h-[22rem] w-[22rem] bg-violet-600/20" />
+
+          <div className="relative z-10 mx-auto max-w-5xl">
+            <Reveal className="mb-9 text-center">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.22em] text-gold-400/70">
+                Availability
+              </p>
+              <h2 className="font-display text-4xl leading-tight text-cream sm:text-5xl">
+                Pick your day,
+                <span className="text-gilded"> we&apos;ll do the rest</span>
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-cream/55">
+                We take a limited number of setups each day so every single one
+                gets our full attention.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <Availability />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Order tracking */}
+        <section id="track" className="relative px-5 py-20 sm:py-24">
+          <div className="relative z-10 mx-auto max-w-5xl">
+            <Reveal className="mb-9 text-center">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.22em] text-gold-400/70">
+                Order tracking
+              </p>
+              <h2 className="font-display text-4xl leading-tight text-cream sm:text-5xl">
+                Already booked?
+                <span className="text-gilded"> Check in on it</span>
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-cream/55">
+                Enter the reference we sent you and see exactly where your
+                surprise is.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <OrderTracking />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Instagram */}
+        <section id="work" className="relative px-5 py-20 sm:py-24">
+          <div className="glow right-[-8%] top-[10%] h-[24rem] w-[24rem] bg-blush-400/15" />
+
+          <div className="relative z-10 mx-auto max-w-6xl">
+            <Reveal className="mb-9 text-center">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.22em] text-gold-400/70">
+                From our feed
+              </p>
+              <h2 className="font-display text-4xl leading-tight text-cream sm:text-5xl">
+                Real moments,
+                <span className="text-gilded"> real reactions</span>
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <InstagramFeed />
+            </Reveal>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 }

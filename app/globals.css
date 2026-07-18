@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
+@theme {
+  /* --- Prettywraps purple luxury palette --- */
+  --color-plum-950: #0e0518;
+  --color-plum-900: #170a26;
+  --color-plum-850: #1e0d33;
+  --color-plum-800: #2a1147;
+  --color-plum-700: #3d1a64;
+  --color-plum-600: #4f2280;
+
+  --color-violet-700: #5a239b;
+  --color-violet-600: #6f2dbd; /* brand primary */
+  --color-violet-500: #8b45d9;
+  --color-violet-400: #a66be8;
+  --color-violet-300: #c4a0f2;
+
+  --color-gold-500: #d4a94f;
+  --color-gold-400: #e8c87e;
+  --color-gold-300: #f2dca6;
+
+  --color-blush-400: #e9a8c6;
+  --color-blush-300: #f5d9e6;
+
+  --color-cream: #fbf7f2;
+  --color-ink: #1a1024;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-4xl: 2rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-plum-950);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+/* A soft champagne gradient for headline accents. */
+@utility text-gilded {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-gold-300),
+    var(--color-gold-400) 40%,
+    var(--color-blush-300) 75%,
+    var(--color-gold-300)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Frosted card surface used across the site. */
+@utility surface {
+  background: linear-gradient(
+    160deg,
+    rgb(255 255 255 / 0.07),
+    rgb(255 255 255 / 0.02)
+  );
+  border: 1px solid rgb(255 255 255 / 0.09);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+@utility surface-hover {
+  transition:
+    border-color 0.4s ease,
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+
+  &:hover {
+    border-color: rgb(232 200 126 / 0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px -28px rgb(111 45 189 / 0.7);
+  }
+}
+
+/* Ambient glow blobs behind sections. */
+@utility glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Slow drifting shimmer on the hero. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.12);
+    opacity: 0.8;
+  }
+}
+
+@utility animate-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@utility animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Typing dots in the concierge. */
+@keyframes bounce-dot {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+
+@utility animate-dot {
+  animation: bounce-dot 1.2s ease-in-out infinite;
+}
+
+/* Elegant thin scrollbar inside the chat. */
+.pretty-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(166 107 232 / 0.5) transparent;
+}
+.pretty-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.pretty-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(166 107 232 / 0.45);
+  border-radius: 9999px;
 }
