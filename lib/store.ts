@@ -67,7 +67,26 @@ type DB = {
 
 const EMPTY_DB: DB = { bookings: {}, customers: {} };
 
+/**
+ * Serverless platforms (Vercel, Netlify functions) run with a read-only
+ * filesystem, so writing here throws EROFS/EPERM. Losing the record is
+ * survivable — the full booking is sent to WhatsApp regardless — but a crash
+ * is not: it turns "book my surprise" into a 500 for the customer.
+ *
+ * So a failed write degrades to an in-memory store instead of throwing. Data
+ * then lives only for the life of that instance, which is why `storageIsDurable`
+ * exists: the tracking endpoint uses it to give an honest answer rather than
+ * claiming a real booking doesn't exist.
+ */
+let useMemory = false;
+let memoryDB: DB = structuredClone(EMPTY_DB);
+
+export function storageIsDurable(): boolean {
+  return !useMemory;
+}
+
 async function read(): Promise<DB> {
+  if (useMemory) return memoryDB;
   try {
     const raw = await fs.readFile(DB_FILE, "utf8");
     const parsed = JSON.parse(raw) as Partial<DB>;
@@ -79,8 +98,22 @@ async function read(): Promise<DB> {
 }
 
 async function write(db: DB): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), "utf8");
+  if (useMemory) {
+    memoryDB = db;
+    return;
+  }
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2), "utf8");
+  } catch (err) {
+    console.warn(
+      "[store] filesystem is not writable, falling back to in-memory storage. " +
+        "Bookings will not persist — configure a database (see lib/store.ts).",
+      err instanceof Error ? err.message : err,
+    );
+    useMemory = true;
+    memoryDB = db;
+  }
 }
 
 function bookingRef(): string {

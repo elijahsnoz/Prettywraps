@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
-import { getBooking, statusLabel, type BookingStatus } from "@/lib/store";
+import { getBooking, statusLabel, storageIsDurable, type BookingStatus } from "@/lib/store";
 import { formatNaira } from "@/lib/catalog";
+import { brand } from "@/lib/brand";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,10 +23,14 @@ export async function GET(req: NextRequest) {
 
   const booking = await getBooking(ref);
   if (!booking) {
-    return Response.json(
-      { found: false, error: `We couldn't find a booking with reference ${ref.toUpperCase()}.` },
-      { status: 404 },
-    );
+    // Without durable storage a real booking can genuinely be missing from
+    // this instance, so don't tell the customer it doesn't exist — point them
+    // at WhatsApp, where the full booking was sent anyway.
+    const error = storageIsDurable()
+      ? `We couldn't find a booking with reference ${ref.toUpperCase()}. Please check the reference, or message us on WhatsApp at ${brand.whatsappDisplay} and we'll look it up for you.`
+      : `We can't look that up automatically right now. Message us on WhatsApp at ${brand.whatsappDisplay} with reference ${ref.toUpperCase()} and we'll give you an update straight away.`;
+
+    return Response.json({ found: false, error }, { status: 404 });
   }
 
   const stepIndex = JOURNEY.indexOf(booking.status);

@@ -6,7 +6,7 @@ import { formatNaira, packages } from "./catalog";
  * live — it drives canonical tags, the sitemap, and social share images.
  */
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://prettywrapsng.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://prettywrap.store"
 ).replace(/\/$/, "");
 
 /**
