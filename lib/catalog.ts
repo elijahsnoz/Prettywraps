@@ -58,8 +58,8 @@ export const packages: Pkg[] = [
     price: 45_000,
     occasions: ["birthday", "just-because", "romantic", "graduation"],
     includes: [
-      "Curated gift box (chocolates, candle, keepsake card)",
-      "Fresh flower bunch",
+      "Curated Gift Bag (chocolates, candle, keepsake card)",
+      "Fresh Flower bunch",
       "Hand-written personal note",
       "Gift wrapping in Prettywraps signature style",
       "Doorstep delivery within the city",
