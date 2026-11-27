@@ -33,13 +33,13 @@ export type QuoteMeta = {
   notes?: string;
 };
 
-/** Delivery / logistics fee by service area. PLACEHOLDER — edit with real rates. */
+/** Delivery / logistics fees after shifting ₦10,000 into the package price. */
 const DELIVERY_FEES: Record<string, number> = {
-  lagos: 10_000,
-  abuja: 15_000,
-  "port harcourt": 15_000,
+  lagos: 0,
+  abuja: 5_000,
+  "port harcourt": 5_000,
 };
-const DEFAULT_DELIVERY_FEE = 25_000;
+const DEFAULT_DELIVERY_FEE = 15_000;
 
 const DEPOSIT_RATE = 0.7; // 70% to lock the date, balance on the day.
 const QUOTE_VALID_DAYS = 7;

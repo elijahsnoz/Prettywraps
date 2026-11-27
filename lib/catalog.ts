@@ -55,7 +55,7 @@ export const packages: Pkg[] = [
     id: "sweet-surprise",
     name: "Sweet Surprise",
     tagline: "A small gesture that lands big.",
-    price: 45_000,
+    price: 55_000,
     occasions: ["birthday", "just-because", "romantic", "graduation"],
     includes: [
       "Curated gift bag",
@@ -71,7 +71,7 @@ export const packages: Pkg[] = [
     id: "birthday-bliss",
     name: "Birthday Bliss",
     tagline: "The classic room takeover.",
-    price: 85_000,
+    price: 95_000,
     occasions: ["birthday", "graduation", "just-because"],
     featured: true,
     includes: [
@@ -89,7 +89,7 @@ export const packages: Pkg[] = [
     id: "room-of-roses",
     name: "Room of Roses",
     tagline: "Their room, styled with intention.",
-    price: 120_000,
+    price: 130_000,
     occasions: ["romantic", "anniversary", "birthday", "proposal"],
     includes: [
       "Customized hot air balloon",
@@ -106,7 +106,7 @@ export const packages: Pkg[] = [
     id: "sweet-arrival",
     name: "Sweet Arrival",
     tagline: "For a big feeling in a beautifully timed moment.",
-    price: 150_000,
+    price: 160_000,
     occasions: ["baby", "romantic", "birthday", "just-because"],
     includes: [
       "Hot air balloon with special treats",
@@ -122,7 +122,7 @@ export const packages: Pkg[] = [
     id: "luxe-hotel",
     name: "Luxe Hotel Experience",
     tagline: "A whole evening, designed end to end.",
-    price: 250_000,
+    price: 260_000,
     occasions: ["anniversary", "romantic", "birthday", "proposal"],
     includes: [
       "Hot air balloon with special treats",
@@ -139,7 +139,7 @@ export const packages: Pkg[] = [
     id: "grand-romance",
     name: "The Grand Romance",
     tagline: "For the yes you only get to ask for once.",
-    price: 450_000,
+    price: 460_000,
     occasions: ["proposal", "anniversary", "birthday"],
     includes: [
       "1 rectangular backdrop (with shimmer panel in color choice / with celebrant picture in color choice) or 1 arch backdrop (with text in color choice)",
